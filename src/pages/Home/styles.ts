@@ -28,6 +28,12 @@ export const HomeContainer = styled.main`
     font-size: 4.375rem;
     font-weight: 900;
   }
+
+  p {
+    font-size: 0.8rem;
+    margin-top: auto;
+    color: ${(props) => props.theme['gray-500']};
+  }
 `
 
 export const FormContainer = styled.div`

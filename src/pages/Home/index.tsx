@@ -19,6 +19,9 @@ export function Home() {
   // Participant List
   const [participants, setParticipants] = useState<participant[]>([])
 
+  // Winner
+  const [winner, setWinner] = useState<string>('')
+
   // Hook Form
   const { register, handleSubmit, reset, watch } = useForm({
     defaultValues: {
@@ -39,13 +42,21 @@ export function Home() {
     reset()
   }
 
-  function handleSortTheWinner() {
-    const participantsCopy = participants
-    const participantsSorted = participantsCopy.sort()
-    console.log(participantsSorted[0])
+  function fisherYatesShuffle(arr: participant[]) {
+    for (let i: number = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1)) // random index
+      ;[arr[i], arr[j]] = [arr[j], arr[i]] // swap
+    }
   }
 
-  console.log(participants)
+  function handleSortTheWinner() {
+    const participantsToShuffle = participants
+    fisherYatesShuffle(participants)
+    const participantWinner = participantsToShuffle[0].name
+
+    setWinner(participantWinner)
+  }
+
   return (
     <HomeContainer>
       <Header />
@@ -65,11 +76,12 @@ export function Home() {
         </FormContainer>
       </form>
 
-      <h1 hidden={true}>th_manso</h1>
+      <h1>{winner}</h1>
       <StartPrizeDrawButton onClick={handleSortTheWinner}>
         <Trophy size={24} />
         Sortear Vencedor
       </StartPrizeDrawButton>
+      <p>Powered by Soberano dos mares</p>
     </HomeContainer>
   )
 }
